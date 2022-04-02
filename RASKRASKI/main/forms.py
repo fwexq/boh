@@ -5,7 +5,7 @@ from django.forms import ModelForm, TextInput, Textarea, ImageField
 class pictureForm(ModelForm):
     class Meta:
         model = picture
-        fields = ["title", "opisanie", "photo"]
+        fields = ["title", "opisanie"]
         widgets = {
             "title": TextInput(attrs={
            'class': 'form-control',

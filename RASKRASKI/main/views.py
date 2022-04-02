@@ -1,16 +1,26 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import picture
+from .models import *
 from .forms import pictureForm
+from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.shortcuts import render, redirect
 
 def index(request):
     pictures = picture.objects.all()
-    return render(request, 'main/index.html', {'title': 'Главная страница сайта', 'pictures': pictures})
+    context = {
+        'title': 'Главная страница сайта',
+        'pictures': pictures,
+       # 'cat_selected': 0
 
 
-def about(request):
-    return render(request, 'main/about.html')
+    }
+    return render(request, 'main/index.html', context)
 
+
+def film(request):
+    return render(request, 'main/film.html')
+
+
+def mult(request):
+    return render(request, 'main/mult.html')
 
 
 def create(request):
@@ -19,7 +29,7 @@ def create(request):
         form = pictureForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('raskraski')
+            return redirect('home')
 
         else:
             error = 'Форма была неверной'
@@ -29,6 +39,25 @@ def create(request):
         'error': error
     }
     return render(request, 'main/create.html', context)
+
+
+
+def show_category(request, cat_id):
+    posts = picture.objects.filter(cat__cat_id=id)
+    cats = Category.objects.all()
+
+    if len(posts) == 0:
+        raise Http404()
+
+    context = {
+        'posts': posts,
+        'cats': cats,
+        'title': 'Отображение по рубрикам',
+        'cat_selected': cat_id,
+    }
+
+    return render(request, 'women/index.html', context=context)
+
 
 
 
