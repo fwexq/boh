@@ -3,4 +3,4 @@ from .models import *
 
 admin.site.register(picture)
 
-admin.site.register(Category)
+#admin.site.register(Category)

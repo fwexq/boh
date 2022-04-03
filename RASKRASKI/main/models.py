@@ -13,10 +13,7 @@ class picture(models.Model):
 
     class Meta:
         verbose_name = 'Картинка'
-        verbose_name_plural='Картинки'
-
-
-
+        verbose_name_plural ='Картинки'
 
 
 class Category(models.Model):
@@ -28,7 +25,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = 'Категория'
-        verbose_name_plural='Категории'
+        verbose_name_plural = 'Категории'
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_id': self.pk})
