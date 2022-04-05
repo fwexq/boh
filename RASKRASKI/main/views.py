@@ -51,25 +51,27 @@ def index(request):
 
 
 
-def show_category(request, cat_id):
-    return HttpResponse(f"Отображение категории с id = {cat_id}")
+def show_category(request, cat_slug):
+   #return HttpResponse(f"Отображение категории с id = {cat_id}")
+
+   pict = picture.objects.get(cat__slug=cat_slug)
+   posts = picture.objects.all()
+   cats = Category.objects.all()
+   # c = Category.objects.get(slug=cat_slug)
+
+   # posts = c.picture_set.all()
 
 
+   context = {
+       'posts': posts,
+       'cats': cats,
+       'pict': pict,
+       'title': 'Отображение по рубрикам',
+       'cat_selected': cat_slug,
 
-#    posts = picture.objects.filter(cat__cat_id=id)
-#    cats = Category.objects.all()
-#
-#    if len(posts) == 0:
-#        raise Http404()
-#
-#    context = {
-#        'posts': posts,
-#        'cats': cats,
-#        'title': 'Отображение по рубрикам',
-#        'cat_selected': cat_id,
-#    }
-#
-#    return render(request, 'women/index.html', context=context)
+   }
+
+   return render(request, 'main/category.html', context=context)
 
 
 
