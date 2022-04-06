@@ -1,4 +1,3 @@
-from .forms import *
 from .models import *
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -33,45 +32,44 @@ def index(request):
 #def mult(request):
 #    return render(request, 'main/mult.html')
 
-def create(request):
-   if request.method == 'POST':
-       form = pictureForm(request.POST, request.FILES)
-       if form.is_valid():
-           form.save()
-           return redirect('home')
-
-   else:
-        form = pictureForm()
-
-   context = {
-       'title': 'Создание поста',
-       'form': form,
-   }
-   return render(request, 'main/create.html', context)
-
-
-
-def show_category(request, cat_slug):
-   #return HttpResponse(f"Отображение категории с id = {cat_id}")
-
-   с = Category.objects.get(slug=cat_slug)
-   posts = с.picture_set.all()
-
-   cats = Category.objects.all()
-   # c = Category.objects.get(slug=cat_slug)
-
-   # posts = c.picture_set.all()
+#def create(request):
+#    error = ''
+#    if request.method == 'POST':
+#        form = pictureForm(request.POST)
+#        if form.is_valid():
+#            form.save()
+#            return redirect('home')
+#
+#        else:
+#            error = 'Форма была неверной'
+#    form = pictureForm()
+#    context = {
+#        'form': form,
+#        'error': error
+#    }
+#    return render(request, 'main/create.html', context)
 
 
-   context = {
-       'cats': cats,
-       'posts': posts,
-       'title': 'Отображение по рубрикам',
-       'cat_selected': cat_slug,
 
-   }
+def show_category(request, cat_id):
+    return HttpResponse(f"Отображение категории с id = {cat_id}")
 
-   return render(request, 'main/category.html', context=context)
+
+
+#    posts = picture.objects.filter(cat__cat_id=id)
+#    cats = Category.objects.all()
+#
+#    if len(posts) == 0:
+#        raise Http404()
+#
+#    context = {
+#        'posts': posts,
+#        'cats': cats,
+#        'title': 'Отображение по рубрикам',
+#        'cat_selected': cat_id,
+#    }
+#
+#    return render(request, 'women/index.html', context=context)
 
 
 

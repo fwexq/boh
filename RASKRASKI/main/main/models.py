@@ -3,11 +3,10 @@ from django.urls import reverse
 # Create your models here.
 
 class picture(models.Model):
-    title = models.CharField(max_length=50, verbose_name='Название')
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
-    opisanie = models.CharField(max_length=50, verbose_name='Описание')
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d", verbose_name='Фотография')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категории')
+    title = models.CharField('Название', max_length=50)
+    opisanie = models.CharField('Описание', max_length=50)
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d")
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name="Категории")
 
     def __str__(self):
         return self.title
@@ -29,6 +28,4 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'cat_slug': self.slug})
-
-
+        return reverse('category', kwargs={'cat_id': self.pk})
